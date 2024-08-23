@@ -1,0 +1,48 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.main {
+  width: 100%;
+  min-height: 100vh;
+  /* background-color: yellow; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+.cardContainer {
+  display: flex;
+  padding-bottom: 2rem;
+}
+
+.Card {
+  transition: ease 0.5s;
+}
+.Card:hover {
+  scale: 1.08;
+}
+/* btn */
+button {
+  outline: none;
+  border: none;
+  transition: ease 0.2s;
+}
+/* btn active hover */
+button:active {
+  scale: 0.95;
+}
+button:hover {
+  cursor: pointer;
+}
+
+.bx:hover {
+  cursor: pointer;
+}
+.bx:active {
+  font-size: 1.95rem !important;
+}

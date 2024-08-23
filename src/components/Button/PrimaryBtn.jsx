@@ -13,6 +13,7 @@ function PrimaryBtn({
   bottom,
   left,
   right,
+  margin,
 }) {
   return (
     <button
@@ -27,6 +28,7 @@ function PrimaryBtn({
         bottom: bottom,
         left: left,
         right: right,
+        margin: margin,
       }}
       onClick={onClick}
     >

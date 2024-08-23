@@ -4,6 +4,8 @@ import ExitIcon from "../BoxIcon/ExitIcon";
 import PrimaryBtn from "../Button/PrimaryBtn";
 import Paragraph from "../paragraph/Paragraph";
 import H1 from "../Headings/H1";
+import Input from "../input/Input";
+import { getDisplayValue, setDisplayValue } from "../input/inputValue";
 
 function Card() {
   const [cards, setCard] = useState([]);
@@ -53,15 +55,13 @@ function Card() {
               key={index}
               className="Card"
               style={{
-                width: "20rem",
-                height: "25rem",
-                // backgroundColor: "gray",
+                width: "22rem",
+                height: "30rem",
                 borderRadius: "16px",
                 position: "relative",
                 boxShadow: "0 4px 8px 0 rgba(0,0,0,.5)",
               }}
             >
-              {/* info Sec */}
               {!item.isEditing && (
                 <div
                   className="infoSec"
@@ -71,7 +71,6 @@ function Card() {
                     gap: "1rem",
                     width: "100%",
                     height: "100%",
-                    // backgroundColor: "green",
                     borderRadius: "15px",
                     position: "absolute relative",
                     padding: ".5rem",
@@ -94,47 +93,57 @@ function Card() {
                       onClick={() => handleMenuClick(index)}
                     />
                   </div>
-                  {/* img Container */}
                   <div
                     className="imgContainer"
                     style={{
                       width: "100%",
-                      height: "30%",
-                      backgroundColor: "red",
+                      height: "35%",
+                      // backgroundColor: "red",
                       display: "flex",
                       justifyContent: "center",
                       position: "relative",
+                      borderRadius: "7px",
                     }}
                   >
-                    {/* bg img */}
+                    {/* profile bg img */}
                     <img
-                      src=""
-                      alt=""
+                      src={
+                        getDisplayValue() ||
+                        "https://via.placeholder.com/300x200.png?text=BgImg..."
+                      }
+                      alt="img  "
                       className="profileBgImg"
                       style={{
-                        width: "80%",
+                        width: "100%",
                         height: "100%",
-                        backgroundColor: "yellow",
+                        // backgroundColor: "yellow",
                         position: "absolute",
+                        borderRadius: "7px",
+                        border: "1px solid black",
                       }}
                     />
                     {/* profile img */}
                     <img
-                      src=""
-                      alt=""
+                      src={
+                        getDisplayValue() ||
+                        "https://via.placeholder.com/96x96.png?text=Profile..."
+                      }
+                      alt="img"
                       className="profileImg"
                       style={{
-                        width: "5rem",
-                        height: "5rem",
-                        backgroundColor: "green",
+                        width: "6rem",
+                        height: "6rem",
+                        // backgroundColor: "green",
                         position: "absolute",
-                        bottom: "0",
-                        right: "0",
+                        bottom: "8px",
+                        right: "8px",
+                        borderRadius: "7px",
+                        border: "1px solid black",
                       }}
                     />
                   </div>
-                  <H1 />
-                  <Paragraph />
+                  <H1 text={getDisplayValue() || "Heading Here"} />
+                  <Paragraph text={getDisplayValue() || "Paragraph Here"} />
 
                   <PrimaryBtn
                     text="Delete Card"
@@ -146,14 +155,12 @@ function Card() {
                 </div>
               )}
 
-              {/* edit sec */}
               {item.isEditing && (
                 <div
                   className="editSec"
                   style={{
                     width: "100%",
                     height: "100%",
-                    // backgroundColor: "aqua",
                     borderRadius: "15px",
                     position: "absolute",
                     padding: ".5rem",
@@ -174,6 +181,46 @@ function Card() {
                       fontSize="2rem"
                       textAlign="right"
                       onClick={() => handleExitClick(index)}
+                    />
+                  </div>
+                  <div
+                    className="imgUrl"
+                    style={{
+                      width: "100%",
+                      height: "4rem",
+                    }}
+                  >
+                    <Paragraph text="Background Img Url" />
+                    <Input
+                      width="100%"
+                      height="2rem"
+                      margin=".2rem 0"
+                      color="#fff"
+                      backgroundColor="#373737"
+                    />
+                    <Paragraph text="Profile Img Url" />
+                    <Input
+                      width="100%"
+                      height="2rem"
+                      margin=".2rem 0"
+                      color="#fff"
+                      backgroundColor="#373737"
+                    />
+                    <Paragraph text="Update Heading" />
+                    <Input
+                      width="100%"
+                      height="2rem"
+                      margin=".2rem 0"
+                      color="#fff"
+                      backgroundColor="#373737"
+                    />
+                    <Paragraph text="Update paragraph" />
+                    <Input
+                      width="100%"
+                      height="2rem"
+                      margin=".2rem 0"
+                      color="#fff"
+                      backgroundColor="#373737"
                     />
                   </div>
                 </div>

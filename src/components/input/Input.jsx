@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PrimaryBtn from "../Button/PrimaryBtn";
-import Paragraph from "../paragraph/Paragraph";
+import { setDisplayValue } from "./inputValue";
 
 function Input({
   type = "text",
@@ -9,16 +9,21 @@ function Input({
   width = "100%",
   height = "40px",
   borderRadius = "7px",
+  margin,
+  backgroundColor,
+  color,
 }) {
   const [inputValue, setInputValue] = useState("");
-  const [displayValue, setDisplayValue] = useState("");
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
   };
 
   const handleClick = () => {
-    setDisplayValue(inputValue);
+    if (inputValue.trim("") !== "") {
+      setDisplayValue(inputValue);
+      console.log(inputValue);
+    }
   };
 
   return (
@@ -29,10 +34,19 @@ function Input({
         required={required}
         onChange={handleChange}
         value={inputValue}
-        style={{ width, height, borderRadius }}
+        style={{
+          width,
+          height,
+          borderRadius,
+          margin: margin,
+          outline: "none",
+          border: "none",
+          backgroundColor: backgroundColor,
+          padding: "4px 16px",
+          color: color,
+        }}
       />
-      <PrimaryBtn text="Submit" onClick={handleClick} />
-      <Paragraph text={displayValue} />
+      <PrimaryBtn text="Submit" margin=".5rem 0" onClick={handleClick} />
     </>
   );
 }

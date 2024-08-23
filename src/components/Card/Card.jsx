@@ -1,21 +1,31 @@
 import React, { useState } from "react";
-import MenuIcon from "../BoxIcon/MenuIcon";
-import ExitIcon from "../BoxIcon/ExitIcon";
 import PrimaryBtn from "../Button/PrimaryBtn";
+import Input from "../input/Input";
 import Paragraph from "../paragraph/Paragraph";
 import H1 from "../Headings/H1";
-import Input from "../input/Input";
-import { getDisplayValue, setDisplayValue } from "../input/inputValue";
 
 function Card() {
-  const [cards, setCard] = useState([]);
+  const [cards, setCards] = useState([]);
 
   const handleAddCard = () => {
-    setCard([...cards, { isEditing: false }]);
+    setCards([
+      ...cards,
+      {
+        isEditing: false,
+        bgImgUrl: "https://via.placeholder.com/300x200.png?text=BgImg...",
+        profileImgUrl: "https://via.placeholder.com/96x96.png?text=Profile...",
+        heading: "Default Heading",
+        paragraph: "Default paragraph",
+        bgImgUrlInput: "",
+        profileImgUrlInput: "",
+        headingInput: "",
+        paragraphInput: "",
+      },
+    ]);
   };
 
   const handleMenuClick = (index) => {
-    setCard(
+    setCards(
       cards.map((card, i) =>
         i === index ? { ...card, isEditing: true } : card
       )
@@ -23,15 +33,36 @@ function Card() {
   };
 
   const handleExitClick = (index) => {
-    setCard(
+    setCards(
       cards.map((card, i) =>
         i === index ? { ...card, isEditing: false } : card
       )
     );
   };
 
-  const handleDeleteCard = (index) => {
-    setCard(cards.filter((_, i) => i !== index));
+  const handleInputChange = (index, field, value) => {
+    setCards(
+      cards.map((card, i) =>
+        i === index ? { ...card, [`${field}Input`]: value } : card
+      )
+    );
+  };
+
+  const handleUpdateClick = (index) => {
+    setCards(
+      cards.map((card, i) =>
+        i === index
+          ? {
+              ...card,
+              bgImgUrl: card.bgImgUrlInput,
+              profileImgUrl: card.profileImgUrlInput,
+              heading: card.headingInput,
+              paragraph: card.paragraphInput,
+              isEditing: false,
+            }
+          : card
+      )
+    );
   };
 
   return (
@@ -53,189 +84,198 @@ function Card() {
           justifyContent: "center",
         }}
       >
-        {cards.map((item, index) => {
-          return (
-            <div
-              key={index}
-              className="Card"
-              style={{
-                width: "22rem",
-                height: "30rem",
-                borderRadius: "16px",
-                position: "relative",
-                boxShadow: "0 4px 8px 0 rgba(0,0,0,.5)",
-              }}
-            >
-              {!item.isEditing && (
+        {cards.map((card, index) => (
+          <div
+            key={index}
+            className="Card"
+            style={{
+              width: "22rem",
+              height: "30rem",
+              borderRadius: "16px",
+              position: "relative",
+              boxShadow: "0 4px 8px 0 rgba(0,0,0,.5)",
+            }}
+          >
+            {!card.isEditing && (
+              <div
+                className="infoSec"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "15px",
+                  position: "absolute",
+                  padding: ".5rem",
+                }}
+              >
                 <div
-                  className="infoSec"
+                  className="topBar"
                   style={{
                     display: "flex",
-                    flexDirection: "column",
-                    gap: "1rem",
-                    width: "100%",
-                    height: "100%",
-                    borderRadius: "15px",
-                    position: "absolute relative",
-                    padding: ".5rem",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "0 .5rem",
                   }}
                 >
-                  <div
-                    className="topBar"
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      padding: "0 .5rem",
-                    }}
-                  >
-                    <Paragraph text="Info Section" />
-                    <MenuIcon
-                      fontSize="2rem"
-                      textAlign="right"
-                      display="inline-block"
-                      onClick={() => handleMenuClick(index)}
-                    />
-                  </div>
-                  <div
-                    className="imgContainer"
-                    style={{
-                      width: "100%",
-                      height: "35%",
-                      // backgroundColor: "red",
-                      display: "flex",
-                      justifyContent: "center",
-                      position: "relative",
-                      borderRadius: "7px",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {/* profile bg img */}
-                    <img
-                      src={
-                        getDisplayValue() ||
-                        "https://via.placeholder.com/300x200.png?text=BgImg..."
-                      }
-                      alt="img  "
-                      className="profileBgImg"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        objectPosition: "center",
-                        // backgroundColor: "yellow",
-                        position: "absolute",
-                        borderRadius: "7px",
-                        border: "1px solid black",
-                      }}
-                    />
-                    {/* profile img */}
-                    <img
-                      src={
-                        getDisplayValue() ||
-                        "https://via.placeholder.com/96x96.png?text=Profile..."
-                      }
-                      alt="img"
-                      className="profileImg"
-                      style={{
-                        width: "6rem",
-                        height: "6rem",
-                        // backgroundColor: "green",
-                        position: "absolute",
-                        bottom: "8px",
-                        right: "8px",
-                        borderRadius: "7px",
-                        border: "1px solid black",
-                      }}
-                    />
-                  </div>
-                  <H1 />
-                  <Paragraph />
-
+                  <Paragraph text="Info Section" />
                   <PrimaryBtn
-                    text="Delete Card"
-                    backgroundColor="#bb2124"
-                    position="absolute"
-                    bottom="1rem"
-                    left="35%"
-                    onClick={() => handleDeleteCard(index)}
+                    text="Edit"
+                    onClick={() => handleMenuClick(index)}
                   />
                 </div>
-              )}
-
-              {item.isEditing && (
                 <div
-                  className="editSec"
+                  className="imgContainer"
                   style={{
                     width: "100%",
-                    height: "100%",
-                    borderRadius: "15px",
-                    position: "absolute",
-                    padding: ".5rem",
+                    height: "35%",
                     display: "flex",
-                    flexDirection: "column",
+                    justifyContent: "center",
+                    position: "relative",
+                    borderRadius: "7px",
+                    overflow: "hidden",
                   }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      padding: "0 .5rem",
-                    }}
-                  >
-                    <Paragraph text="Edit Section" />
-                    <ExitIcon
-                      fontSize="2rem"
-                      textAlign="right"
-                      onClick={() => handleExitClick(index)}
-                    />
-                  </div>
-                  <div
-                    className="imgUrl"
+                  <img
+                    src={
+                      card.bgImgUrl ||
+                      "https://via.placeholder.com/300x200.png?text=IMG"
+                    }
+                    alt="Background"
+                    className="profileBgImg"
                     style={{
                       width: "100%",
-                      height: "4rem",
+                      height: "100%",
+                      objectFit: "cover",
+                      objectPosition: "center",
+                      position: "absolute",
+                      borderRadius: "7px",
+                      border: "1px solid black",
                     }}
-                  >
-                    <Paragraph text="Background Img Url" />
-                    <Input
-                      width="100%"
-                      height="2rem"
-                      margin=".2rem 0"
-                      color="#fff"
-                      backgroundColor="#373737"
-                    />
-                    <Paragraph text="Profile Img Url" />
-                    <Input
-                      width="100%"
-                      height="2rem"
-                      margin=".2rem 0"
-                      color="#fff"
-                      backgroundColor="#373737"
-                    />
-                    <Paragraph text="Update Heading" />
-                    <Input
-                      width="100%"
-                      height="2rem"
-                      margin=".2rem 0"
-                      color="#fff"
-                      backgroundColor="#373737"
-                    />
-                    <Paragraph text="Update paragraph" />
-                    <Input
-                      width="100%"
-                      height="2rem"
-                      margin=".2rem 0"
-                      color="#fff"
-                      backgroundColor="#373737"
-                    />
-                  </div>
+                  />
+                  <img
+                    src={
+                      card.profileImgUrl ||
+                      "https://via.placeholder.com/300x200.png?text=IMG"
+                    }
+                    alt="Profile"
+                    className="profileImg"
+                    style={{
+                      width: "6rem",
+                      height: "6rem",
+                      position: "absolute",
+                      bottom: "8px",
+                      right: "8px",
+                      borderRadius: "7px",
+                      border: "1px solid black",
+                    }}
+                  />
                 </div>
-              )}
-            </div>
-          );
-        })}
+                <H1 text={card.heading || "Heading Here"} />
+                <Paragraph text={card.paragraph || "Paragraph Here"} />
+                <PrimaryBtn
+                  text="Delete Card"
+                  backgroundColor="#bb2124"
+                  position="absolute"
+                  bottom="1rem"
+                  left="35%"
+                  onClick={() => setCards(cards.filter((_, i) => i !== index))}
+                />
+              </div>
+            )}
+
+            {card.isEditing && (
+              <div
+                className="editSec"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "15px",
+                  position: "absolute",
+                  padding: ".5rem",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "0 .5rem",
+                  }}
+                >
+                  <Paragraph text="Edit Section" />
+                  <PrimaryBtn
+                    text="Exit"
+                    onClick={() => handleExitClick(index)}
+                  />
+                </div>
+                <div
+                  className="imgUrl"
+                  style={{
+                    width: "100%",
+                    height: "4rem",
+                  }}
+                >
+                  <Paragraph text="Background Img Url" />
+                  <Input
+                    width="100%"
+                    height="2rem"
+                    margin=".2rem 0"
+                    color="#fff"
+                    backgroundColor="#373737"
+                    value={card.bgImgUrlInput}
+                    onChange={(e) =>
+                      handleInputChange(index, "bgImgUrl", e.target.value)
+                    }
+                    onSubmit={() => handleUpdateClick(index)}
+                  />
+                  <Paragraph text="Profile Img Url" />
+                  <Input
+                    width="100%"
+                    height="2rem"
+                    margin=".2rem 0"
+                    color="#fff"
+                    backgroundColor="#373737"
+                    value={card.profileImgUrlInput}
+                    onChange={(e) =>
+                      handleInputChange(index, "profileImgUrl", e.target.value)
+                    }
+                    onSubmit={() => handleUpdateClick(index)}
+                  />
+                  <Paragraph text="Update Heading" />
+                  <Input
+                    width="100%"
+                    height="2rem"
+                    margin=".2rem 0"
+                    color="#fff"
+                    backgroundColor="#373737"
+                    value={card.headingInput}
+                    onChange={(e) =>
+                      handleInputChange(index, "heading", e.target.value)
+                    }
+                    onSubmit={() => handleUpdateClick(index)}
+                  />
+                  <Paragraph text="Update Paragraph" />
+                  <Input
+                    width="100%"
+                    height="2rem"
+                    margin=".2rem 0"
+                    color="#fff"
+                    backgroundColor="#373737"
+                    value={card.paragraphInput}
+                    onChange={(e) =>
+                      handleInputChange(index, "paragraph", e.target.value)
+                    }
+                    onSubmit={() => handleUpdateClick(index)}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

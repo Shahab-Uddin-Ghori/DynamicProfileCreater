@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import PrimaryBtn from "../Button/PrimaryBtn";
-import { setDisplayValue } from "./inputValue";
 
 function Input({
   type = "text",
@@ -12,28 +11,18 @@ function Input({
   margin,
   backgroundColor,
   color,
+  value,
+  onChange,
+  onSubmit,
 }) {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleClick = () => {
-    if (inputValue.trim("") !== "") {
-      setDisplayValue(inputValue);
-      console.log(inputValue);
-    }
-  };
-
   return (
     <>
       <input
         type={type}
         placeholder={placeholder}
         required={required}
-        onChange={handleChange}
-        value={inputValue}
+        onChange={onChange}
+        value={value}
         style={{
           width,
           height,
@@ -46,7 +35,7 @@ function Input({
           color: color,
         }}
       />
-      <PrimaryBtn text="Submit" margin=".5rem 0" onClick={handleClick} />
+      <PrimaryBtn text="Submit" margin=".5rem 0" onClick={onSubmit} />
     </>
   );
 }

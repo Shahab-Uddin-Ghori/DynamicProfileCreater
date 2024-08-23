@@ -30,6 +30,10 @@ function Card() {
     );
   };
 
+  const handleDeleteCard = (index) => {
+    setCard(cards.filter((_, i) => i !== index));
+  };
+
   return (
     <div
       style={{
@@ -103,6 +107,7 @@ function Card() {
                       justifyContent: "center",
                       position: "relative",
                       borderRadius: "7px",
+                      overflow: "hidden",
                     }}
                   >
                     {/* profile bg img */}
@@ -116,6 +121,8 @@ function Card() {
                       style={{
                         width: "100%",
                         height: "100%",
+                        objectFit: "cover",
+                        objectPosition: "center",
                         // backgroundColor: "yellow",
                         position: "absolute",
                         borderRadius: "7px",
@@ -142,8 +149,8 @@ function Card() {
                       }}
                     />
                   </div>
-                  <H1 text={getDisplayValue() || "Heading Here"} />
-                  <Paragraph text={getDisplayValue() || "Paragraph Here"} />
+                  <H1 />
+                  <Paragraph />
 
                   <PrimaryBtn
                     text="Delete Card"
@@ -151,6 +158,7 @@ function Card() {
                     position="absolute"
                     bottom="1rem"
                     left="35%"
+                    onClick={() => handleDeleteCard(index)}
                   />
                 </div>
               )}

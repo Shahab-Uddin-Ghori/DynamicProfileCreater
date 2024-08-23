@@ -24,7 +24,7 @@
   transition: ease 0.5s;
 }
 .Card:hover {
-  scale: 1.08;
+  scale: 1.03;
 }
 /* btn */
 button {

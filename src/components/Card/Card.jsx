@@ -3,6 +3,9 @@ import PrimaryBtn from "../Button/PrimaryBtn";
 import Input from "../input/Input";
 import Paragraph from "../paragraph/Paragraph";
 import H1 from "../Headings/H1";
+import H3 from "../Headings/H3";
+import MenuIcon from "../BoxIcon/MenuIcon";
+import ExitIcon from "../BoxIcon/ExitIcon";
 
 function Card() {
   const [cards, setCards] = useState([]);
@@ -119,10 +122,14 @@ function Card() {
                     padding: "0 .5rem",
                   }}
                 >
-                  <Paragraph text="Info Section" />
-                  <PrimaryBtn
+                  <H3 text="Info Section" />
+                  {/* <PrimaryBtn
                     text="Edit"
                     onClick={() => handleMenuClick(index)}
+                  /> */}
+                  <MenuIcon
+                    onClick={() => handleMenuClick(index)}
+                    fontSize="2rem"
                   />
                 </div>
                 <div
@@ -206,10 +213,14 @@ function Card() {
                     padding: "0 .5rem",
                   }}
                 >
-                  <Paragraph text="Edit Section" />
-                  <PrimaryBtn
+                  <H3 text="Edit Section" />
+                  {/* <PrimaryBtn
                     text="Exit"
                     onClick={() => handleExitClick(index)}
+                  /> */}
+                  <ExitIcon
+                    onClick={() => handleExitClick(index)}
+                    fontSize="2rem"
                   />
                 </div>
                 <div
